@@ -7,7 +7,7 @@ forma visual las entidades, sus atributos y las relaciones que estructuran nuest
 
 ## 📂 Contenido del Repositorio
 
-* **`[word].docx`**: Archivo word con el formato de respuesta solicitado. Incluye las imágenes de los modelos en
+* **`Encargo_Semanal.docx`**: Archivo word con el formato de respuesta solicitado. Incluye las imágenes de los modelos en
   notación Barker y Bachman.
 * **`[Encargo_Semanal.zip]/`**: Carpeta de diseño técnico que incluye el archivo de arquitectura de datos `.dmd`.
 
