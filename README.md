@@ -42,13 +42,14 @@ El objetivo de esta actividad formativa es diseñar el **Modelo Conceptual (Mode
 
 Modelo conceptual del módulo de reserva y venta de vuelos.
 
-![Modelo Entidad-Relación (MER)](imagenes/mer.png)
+<img width="1024" height="918" alt="mer" src="https://github.com/user-attachments/assets/8b3e057c-3875-404d-8c22-b350193c462e" />
 
 ### Bachman (Modelo Relacional)
 
 Modelo relacional / físico en notación Bachman (Ingeniería de la Información).
 
-![Notación Bachman](imagenes/bachman.png)
+<img width="1024" height="955" alt="bachman" src="https://github.com/user-attachments/assets/bf0ce7d7-7e88-484f-84e7-9978d58c4db1" />
+
 
 ---
 
