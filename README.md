@@ -59,9 +59,6 @@ El repositorio está organizado de la siguiente manera:
 ```text
 ├── PRY2204_Exp1_Grupo9_S2.docx # Documento explicativo e imágenes del modelo (Entregable AVA)
 ├── exp_s2_grupo9.zip           # Archivo comprimido con el diseño original de Data Modeler
-├── imagenes/
-│   ├── mer.png                 # Diagrama MER (modelo conceptual)
-│   └── bachman.png             # Diagrama Bachman (modelo relacional)
 └── README.md                   # Documentación general del repositorio
 ```
 
