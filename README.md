@@ -64,3 +64,4 @@ El repositorio está organizado de la siguiente manera:
 │   └── bachman.png             # Diagrama Bachman (modelo relacional)
 └── README.md                   # Documentación general del repositorio
 ```
+
