@@ -1,4 +1,4 @@
-# 📊 Aplicando conceptos de modelamiento inicial
+# 📊 Aplicando conceptos de modelamiento inicial.
 
 ### Formativa 1 - Semana 1
 
