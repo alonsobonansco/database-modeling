@@ -19,20 +19,20 @@ Este repositorio contiene la solución correspondiente a la **Semana 2** de la a
 
 La aerolínea **BT&Airways**, con más de 25 años operando en el mercado de transporte global de pasajeros, requiere optimizar sus plataformas de TI. Actualmente gestiona cerca de 35,000 vuelos anuales con proyecciones a triplicarse en el mediano plazo.
 
-El objetivo de esta actividad formativa es diseñar el **Modelo Conceptual (Modelo Entidad-Relación - MER)** y el **Modelo Relacional/Físico (Ingeniería de la Información / Notación Bachman)** para el módulo de reserva y venta de vuelos de la compañía[cite: 1].
+El objetivo de esta actividad formativa es diseñar el **Modelo Conceptual (Modelo Entidad-Relación - MER)** y el **Modelo Relacional/Físico (Ingeniería de la Información / Notación Bachman)** para el módulo de reserva y venta de vuelos de la compañía.
 
 ---
 
 ## 🛠️ Reglas de Negocio Representadas
 
-1. **Pasajeros y Reservas:** Un pasajero puede realizar múltiples reservas de vuelo[cite: 1]. Cada reserva pertenece a un único pasajero y a un único vuelo[cite: 1].
-2. **Vuelos y Aviones:** Un avión (identificado por matrícula única, marca, modelo y capacidad de 200 a 800 asientos) puede realizar múltiples vuelos[cite: 1]. Cada vuelo está asociado a un único avión[cite: 1].
-3. **Atención por Empleados:** Un empleado administrativo atiende al pasajero y asigna el vuelo[cite: 1].
+1. **Pasajeros y Reservas:** Un pasajero puede realizar múltiples reservas de vuelo. Cada reserva pertenece a un único pasajero y a un único vuelo.
+2. **Vuelos y Aviones:** Un avión (identificado por matrícula única, marca, modelo y capacidad de 200 a 800 asientos) puede realizar múltiples vuelos. Cada vuelo está asociado a un único avión.
+3. **Atención por Empleados:** Un empleado administrativo atiende al pasajero y asigna el vuelo.
 4. **Jerarquía de Empleados (Herencia/Especialización):**
-    * **Empleado:** Entidad general que registra RUT, nombres, apellidos, dirección, sueldo base, fecha de ingreso, género y teléfonos[cite: 1].
-    * **Piloto:** Almacena horas de vuelo acumuladas y AFP[cite: 1].
-    * **Administrativo:** Almacena horas extras y AFP[cite: 1].
-5. **Equipaje:** Un pasajero puede registrar equipaje asociado a sus reservas[cite: 1]. Se identifica por un código único y posee atributos como color, peso (kg), descripción opcional, tipo de embarque (prioritario/normal) y si es frágil[cite: 1].
+    * **Empleado:** Entidad general que registra RUT, nombres, apellidos, dirección, sueldo base, fecha de ingreso, género y teléfonos.
+    * **Piloto:** Almacena horas de vuelo acumuladas y AFP.
+    * **Administrativo:** Almacena horas extras y AFP.
+5. **Equipaje:** Un pasajero puede registrar equipaje asociado a sus reservas. Se identifica por un código único y posee atributos como color, peso (kg), descripción opcional, tipo de embarque (prioritario/normal) y si es frágil.
 
 ---
 
