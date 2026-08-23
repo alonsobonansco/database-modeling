@@ -36,13 +36,31 @@ El objetivo de esta actividad formativa es diseñar el **Modelo Conceptual (Mode
 
 ---
 
+## 📐 Diagramas
+
+### MER (Modelo Entidad-Relación)
+
+Modelo conceptual del módulo de reserva y venta de vuelos.
+
+![Modelo Entidad-Relación (MER)](imagenes/mer.png)
+
+### Bachman (Modelo Relacional)
+
+Modelo relacional / físico en notación Bachman (Ingeniería de la Información).
+
+![Notación Bachman](imagenes/bachman.png)
+
+---
+
 ## 🗂️ Estructura del Repositorio
 
 El repositorio está organizado de la siguiente manera:
 
 ```text
-├── Encargo_Semanal.docx        # Documento explicativo e imágenes del modelo (Entregable AVA)
-├── Encargo_Semanal.zip         # Archivo comprimido con el diseño original de Data Modeler
-│   ├── Modelo_Base.dmd         # Archivo principal de Oracle SQL Developer Data Modeler
-│   └── Modelo_Base/            # Carpeta contenedora del diseño y metadatos
+├── PRY2204_Exp1_Grupo9_S2.docx # Documento explicativo e imágenes del modelo (Entregable AVA)
+├── exp_s2_grupo9.zip           # Archivo comprimido con el diseño original de Data Modeler
+├── imagenes/
+│   ├── mer.png                 # Diagrama MER (modelo conceptual)
+│   └── bachman.png             # Diagrama Bachman (modelo relacional)
 └── README.md                   # Documentación general del repositorio
+```
