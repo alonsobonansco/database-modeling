@@ -31,10 +31,7 @@ Sirven para no escribir mil veces el mismo texto (“Soltero”, “Ecuador”, 
 | `ESTADO_CIVIL` | `# id_estado_civil` | `* descripcion` | 02 = Soltero |
 | `GRADO_ACADEMICO` | `# id_grado` | `* descripcion` | L / M / D (Pedro es Magíster) |
 | `IDIOMA` | `# id_idioma` | `* nombre_idioma` | Español, Inglés, Francés |
-| `NIVEL_IDIOMA` | `# id_nivel` | `* descripcion` | Básico, Intermedio, Avanzado, Nativo |
 | `PROFESION` | `# id_profesion` | `* nombre_profesion` | Ing. Informática, Diseño Industrial |
-
-`NIVEL_IDIOMA` no es “los idiomas que habla la persona”. Es el **nivel exigido** cuando postula a una empresa extranjera (regla de visa).
 
 ### 1.2 Entidades de negocio
 
@@ -98,10 +95,7 @@ No se dibujan como línea naranja N:M. Se crean como **entidades azules** con do
 | Entidad | Identificador | Atributo propio | Regla |
 |---|---|---|---|
 | `TITULO_PROFESIONAL` | `# nro_folio` + `# id_profesion` | `* fecha_obtencion` | mínimo 1 y máximo 2 títulos por postulante |
-| `DOMINIO_IDIOMA` | `# nro_folio` + `# id_idioma` | `es_nativo` (S/N) | un postulante declara 1 o más idiomas |
-
-¿Por qué el nivel de idioma no va en `DOMINIO_IDIOMA`?  
-El formulario lista **qué idiomas habla**. El nivel es un **requisito de la visa** de esa postulación extranjera, no de cada idioma.
+| `NIVEL_IDIOMA` | `# nro_folio` + `# id_idioma` | `es_nativo` (S/N) | un postulante declara 1 o más idiomas |
 
 ---
 
@@ -126,33 +120,9 @@ Lectura: el lado `1` es “el padre”; el lado `N` es “puede haber varios”.
 | `EMPRESA` — `POSTULACION` | 1 : N | postulación siempre a una empresa. Una empresa puede no tener postulantes aún | muchos pueden postular a Cisco |
 | `POSTULANTE` — `TITULO_PROFESIONAL` | 1 : N | el postulante debe tener al menos 1 (máx. 2) | Pedro tiene 2 títulos |
 | `PROFESION` — `TITULO_PROFESIONAL` | 1 : N | **opcional** del lado profesión: el catálogo puede existir sin que nadie la haya declarado. Del lado título es **obligatoria** | cada título apunta a una profesión |
-| `POSTULANTE` — `DOMINIO_IDIOMA` | 1 : N | el postulante declara idiomas | Español, Inglés, Francés = 3 filas |
+| `POSTULACION` — `DOMINIO_IDIOMA` | 1 : N | el postulante declara idiomas | Español, Inglés, Francés = 3 filas |
 | `IDIOMA` — `DOMINIO_IDIOMA` | 1 : N | opcional del lado idioma (puede no haber hablantes aún). Obligatoria del lado dominio | |
-| `NIVEL_IDIOMA` — `POSTULACION_EXTRANJERA` | 1 : N | obligatorio en el subtipo extranjero | nivel exigido por la visa |
 | `POSTULACION` — `POSTULACION_NACIONAL` / `EXTRANJERA` | 1 : 1 | arco exclusivo y total | o pretensión o visa, no ambas |
-
-Diagrama de referencia (las intermedias ya son entidades, no líneas N:M):
-
-```mermaid
-erDiagram
-    PAIS ||--o{ CIUDAD : contiene
-    CIUDAD ||--o{ COMUNA : agrupa
-    CIUDAD ||--o{ EMPRESA : domicilia
-    COMUNA ||--o{ POSTULANTE : reside
-    PAIS ||--o{ POSTULANTE : origen
-    GENERO ||--o{ POSTULANTE : clasifica
-    ESTADO_CIVIL ||--o{ POSTULANTE : describe
-    GRADO_ACADEMICO ||--o{ POSTULANTE : acredita
-    POSTULANTE ||--|| POSTULACION : realiza
-    EMPRESA ||--o{ POSTULACION : recibe
-    POSTULACION ||--o| POSTULACION_NACIONAL : es
-    POSTULACION ||--o| POSTULACION_EXTRANJERA : es
-    POSTULANTE ||--|{ TITULO_PROFESIONAL : declara
-    PROFESION ||--o{ TITULO_PROFESIONAL : titula
-    POSTULANTE ||--o{ DOMINIO_IDIOMA : habla
-    IDIOMA ||--o{ DOMINIO_IDIOMA : se_declara
-    NIVEL_IDIOMA ||--o{ POSTULACION_EXTRANJERA : exige
-```
 
 ---
 
@@ -308,15 +278,5 @@ Si tu modelo no puede guardar esto **sin repetir** “Cisco System” ni “Espa
 6. Identificar la empresa solo como `cis`. Falta el correlativo (`cis01`).
 
 ---
-
-## Archivos de esta carpeta
-
-| Archivo | Para qué |
-|---|---|
-| `ministerio_trabajo_v2.dmd` + carpeta `ministerio_trabajo_v2/` | Diseño para abrir en Oracle SQL Developer Data Modeler (van juntos) |
-| `ministerio_trabajo_v2.zip` | Lo mismo, listo para el AVA |
-| `sql/01_crear_modelo_3fn.sql` | Tablas en Oracle |
-| `sql/02_datos_ejemplo.sql` | Datos de Pedro y las empresas del enunciado |
-| `GUIA_SOLUCION_MER_NORMALIZACION.md` | Versión más larga, para cotejar detalle |
 
 Entrega AVA: capturas **Barker** y **Bachman** desde Data Modeler + el `.dmd` con su subcarpeta.
