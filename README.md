@@ -13,6 +13,7 @@ El proyecto consiste en normalizar, corregir y completar un diseño conceptual p
 
 * `Exp2_S5_Alonso_Bonansco.docx`: Archivo word con el formato de respuesta solicitado. Incluye las imágenes del modelo MER, modelo relacional normalizado y script generado con la herramienta.
 * `Modelo_Base_Semana5.zip`: Carpeta de diseño técnico que incluye el archivo de arquitectura de datos `.dmd`.
+* `script_ddl_s5.sql`: Script físico DDL final optimizado, limpio de nombres redundantes automáticos del sistema y con nomenclatura estandarizada de llaves (`PK_`, `FK_`, `UK_`).
 
 ---
 
