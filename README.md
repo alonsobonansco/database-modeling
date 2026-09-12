@@ -67,5 +67,5 @@ Para abrir, editar y visualizar el archivo estructurado .dmd contenido en la car
 ### 📋 Autor:
 
 Alonso Bonansco Vergara  
-Modelamiento de Base de Datos - 004A  
+Modelamiento de Bases de Datos - 004A  
 Analista Programador Computacional
