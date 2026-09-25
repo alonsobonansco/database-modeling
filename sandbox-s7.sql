@@ -1,6 +1,5 @@
--- =====================
+
 -- DROPS PARA PRUEBAS
--- =====================
 
 DROP TABLE dominio;
 DROP TABLE titulacion;
@@ -14,9 +13,9 @@ DROP TABLE titulo;
 DROP TABLE genero;
 
 
--- ====================
--- CREACION TABLAS
--- ====================
+-- ==================================
+-- CASO 1 - IMPLEMENTACION DEL MODELO
+-- ==================================
 
 CREATE TABLE estado_civil (
     id_estado_civil VARCHAR2(2 CHAR) CONSTRAINT pk_estado_civil PRIMARY KEY,
@@ -59,11 +58,10 @@ CREATE TABLE compania (
     
     calle VARCHAR2(50 CHAR) NOT NULL,
     numeracion NUMBER(5) NOT NULL,
-    id_region NUMBER(2) NOT NULL,
     renta_promedio NUMBER(10),
     pct_aumento NUMBER(4,3),
-    cod_comuna NUMBER(5) NOT NULL
-    -- cod_region NUMBER(2) NOT NULL
+    cod_comuna NUMBER(5) NOT NULL,
+    cod_region NUMBER(2) NOT NULL
 );
 
 CREATE TABLE personal (
@@ -80,7 +78,7 @@ CREATE TABLE personal (
     numeracion NUMBER(5) NOT NULL,
     sueldo NUMBER(5) NOT NULL, 
     cod_comuna NUMBER(5) NOT NULL,
-    -- cod_region NUMBER(2) NOT NULL,
+    cod_region NUMBER(2) NOT NULL,
     cod_genero VARCHAR2(3 CHAR),
     cod_estado_civil VARCHAR2(2 CHAR),
     cod_empresa NUMBER(2) NOT NULL,
@@ -104,9 +102,7 @@ CREATE TABLE dominio (
 ALTER TABLE dominio ADD CONSTRAINT pk_dominio PRIMARY KEY (id_idioma, persona_rut);
 
 
--- ====================
 -- AGREGAR FOREIGN KEYS
--- ====================
 
 ALTER TABLE comuna 
 ADD CONSTRAINT fk_comuna_region 
@@ -140,9 +136,9 @@ ALTER TABLE personal
 ADD CONSTRAINT fk_personal_genero
 FOREIGN KEY (cod_genero) REFERENCES genero(id_genero);
 
-/*ALTER TABLE personal
+ALTER TABLE personal
 ADD CONSTRAINT fk_personal_region
-FOREIGN KEY (cod_region) REFERENCES region(id_region);*/
+FOREIGN KEY (cod_region) REFERENCES region(id_region);
 
 ALTER TABLE personal
 ADD CONSTRAINT fk_personal_estado_civil
@@ -156,9 +152,10 @@ ALTER TABLE personal
 ADD CONSTRAINT fk_personal_encargado
 FOREIGN KEY (encargado_rut) REFERENCES personal(rut_persona);
 
--- ====================
--- CASO 2 - MODIFICACION MODELO, ALTER TABLE
--- ====================
+
+-- =================================
+-- CASO 2 - MODIFICACION DEL MODELO
+-- =================================
 
 ALTER TABLE personal
 ADD CONSTRAINT uk_personal_email UNIQUE (email);
@@ -172,18 +169,18 @@ ADD CONSTRAINT chk_sueldo_personal
 CHECK (sueldo >= 450000);
 
 
--- ====================
--- CASO 3 - OBJETO SECUENCIA Y POBLACION DE DATOS
--- ====================
+-- ================================
+-- CASO 3 - POBLAMIENTO DEL MODELO
+-- ================================
 
 DROP SEQUENCE seq_comuna;
+DROP SEQUENCE seq_compania;
 
+-- Objetos secuencia
 CREATE SEQUENCE seq_comuna
     START WITH 1101
     INCREMENT BY 6;
     -- NOCACHE
-
-DROP SEQUENCE seq_compania;
 
 CREATE SEQUENCE seq_compania
     START WITH 10
@@ -191,25 +188,61 @@ CREATE SEQUENCE seq_compania
     -- NOCACHE
 
 
--- poblar tablas: region, comuna, idioma, compania (más fuerte a más débil)
+-- Poblamiento de tablas idioma, region, comuna y compania
+
+INSERT INTO idioma (
+    nombre_idioma
+) VALUES (
+    'Ingles'
+);
+
+INSERT INTO idioma (
+    nombre_idioma
+) VALUES (
+    'Chino'
+);
+
+INSERT INTO idioma (
+    nombre_idioma
+) VALUES (
+    'Aleman'
+);
+
+INSERT INTO idioma (
+    nombre_idioma
+) VALUES (
+    'Espanol'
+);
+
+INSERT INTO idioma (
+    nombre_idioma
+) VALUES (
+    'Frances'
+);
+
+-- prueba idiomas
+SELECT * FROM idioma;
 
 INSERT INTO region (
     nombre_region
 ) VALUES (
-    'Arica y Parinacota'
+    'ARICA Y PARINACOTA'
 );
 
 INSERT INTO region (
     nombre_region
 ) VALUES (
-    'Metropolitana'
+    'METROPOLITANA'
 );
 
 INSERT INTO region (
     nombre_region
 ) VALUES (
-    'La Araucanía'
+    'LA ARAUCANIA'
 );
+
+-- prueba regiones
+SELECT * FROM region;
 
 INSERT INTO comuna (
     id_comuna,
@@ -240,3 +273,218 @@ INSERT INTO comuna (
     'Temuco',
     11
 );
+
+-- prueba comunas
+SELECT * FROM comuna;
+
+INSERT INTO compania (
+    id_empresa,
+    nombre_empresa,
+    calle,
+    numeracion,
+    renta_promedio,
+    pct_aumento,
+    cod_comuna,
+    cod_region
+) VALUES (
+    seq_compania.NEXTVAL,
+    'CCyRojas',
+    'Amapolas',
+    506,
+    1857000,
+    0.5,
+    1101,
+    7
+);
+
+INSERT INTO compania (
+    id_empresa,
+    nombre_empresa,
+    calle,
+    numeracion,
+    renta_promedio,
+    pct_aumento,
+    cod_comuna,
+    cod_region
+) VALUES (
+    seq_compania.NEXTVAL,
+    'SenTTy',
+    'Los Alamos',
+    3490,
+    897000,
+    0.025,
+    1101,
+    7
+);
+
+INSERT INTO compania (
+    id_empresa,
+    nombre_empresa,
+    calle,
+    numeracion,
+    renta_promedio,
+    pct_aumento,
+    cod_comuna,
+    cod_region
+) VALUES (
+    seq_compania.NEXTVAL,
+    'Praxia LTDA',
+    'Las Camelias',
+    11098,
+    2157000,
+    0.035,
+    1107,
+    9
+);
+
+INSERT INTO compania (
+    id_empresa,
+    nombre_empresa,
+    calle,
+    numeracion,
+    renta_promedio,
+    pct_aumento,
+    cod_comuna,
+    cod_region
+) VALUES (
+    seq_compania.NEXTVAL,
+    'TIC spa',
+    'FLORES S.A.',
+    4357,
+    857000,
+    NULL,
+    1107,
+    9
+);
+
+INSERT INTO compania (
+    id_empresa,
+    nombre_empresa,
+    calle,
+    numeracion,
+    renta_promedio,
+    pct_aumento,
+    cod_comuna,
+    cod_region
+) VALUES (
+    seq_compania.NEXTVAL,
+    'SANTANA LTDA',
+    'AVDA VIC. MACKENA',
+    106,
+    757000,
+    0.015,
+    1101,
+    7
+);
+
+INSERT INTO compania (
+    id_empresa,
+    nombre_empresa,
+    calle,
+    numeracion,
+    renta_promedio,
+    pct_aumento,
+    cod_comuna,
+    cod_region
+) VALUES (
+    seq_compania.NEXTVAL,
+    'FLORES Y ASOCIADOS',
+    'PEDRO LATORRE',
+    557,
+    589000,
+    0.015,
+    1107,
+    9
+);
+
+INSERT INTO compania (
+    id_empresa,
+    nombre_empresa,
+    calle,
+    numeracion,
+    renta_promedio,
+    pct_aumento,
+    cod_comuna,
+    cod_region
+) VALUES (
+    seq_compania.NEXTVAL,
+    'J.A. HOFFMAN',
+    'LATINA D.32',
+    509,
+    1857000,
+    0.025,
+    1113,
+    11
+);
+
+INSERT INTO compania (
+    id_empresa,
+    nombre_empresa,
+    calle,
+    numeracion,
+    renta_promedio,
+    pct_aumento,
+    cod_comuna,
+    cod_region
+) VALUES (
+    seq_compania.NEXTVAL,
+    'CAGLIARI D.',
+    'ALAMEDA',
+    206,
+    1857000,
+    NULL,
+    1107,
+    9
+);
+
+INSERT INTO compania (
+    id_empresa,
+    nombre_empresa,
+    calle,
+    numeracion,
+    renta_promedio,
+    pct_aumento,
+    cod_comuna,
+    cod_region
+) VALUES (
+    seq_compania.NEXTVAL,
+    'Rojas HNOS LTDA',
+    'SUCRE',
+    106,
+    957000,
+    0.005,
+    1113,
+    11
+);
+
+INSERT INTO compania (
+    id_empresa,
+    nombre_empresa,
+    calle,
+    numeracion,
+    renta_promedio,
+    pct_aumento,
+    cod_comuna,
+    cod_region
+) VALUES (
+    seq_compania.NEXTVAL,
+    'FRIENDS P. S.A',
+    'SUECIA',
+    506,
+    857000,
+    0.015,
+    1113,
+    11
+);
+
+-- prueba companias
+SELECT * FROM compania;
+
+
+-- ===============================
+-- CASO 4 - RECUPERACION DE DATOS
+-- ===============================
+
+-- Informe 1
+
+-- Informe 2
