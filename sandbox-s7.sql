@@ -24,7 +24,8 @@ CREATE TABLE estado_civil (
 );
 
 CREATE TABLE region (
-    id_region NUMBER(2) CONSTRAINT pk_region PRIMARY KEY,
+    id_region NUMBER(2) GENERATED ALWAYS AS IDENTITY
+    (START WITH 7 INCREMENT BY 2) CONSTRAINT pk_region PRIMARY KEY,
     nombre_region VARCHAR2(25 CHAR) NOT NULL
 );
 
@@ -34,7 +35,8 @@ CREATE TABLE titulo (
 );
 
 CREATE TABLE idioma (
-    id_idioma NUMBER(3) CONSTRAINT pk_idioma PRIMARY KEY,
+    id_idioma NUMBER(3) GENERATED ALWAYS AS IDENTITY 
+    (START WITH 25 INCREMENT BY 3) CONSTRAINT pk_idioma PRIMARY KEY,
     nombre_idioma VARCHAR2(30 CHAR) NOT NULL
 );
 
@@ -153,3 +155,88 @@ FOREIGN KEY (cod_empresa) REFERENCES compania(id_empresa);
 ALTER TABLE personal
 ADD CONSTRAINT fk_personal_encargado
 FOREIGN KEY (encargado_rut) REFERENCES personal(rut_persona);
+
+-- ====================
+-- CASO 2 - MODIFICACION MODELO, ALTER TABLE
+-- ====================
+
+ALTER TABLE personal
+ADD CONSTRAINT uk_personal_email UNIQUE (email);
+
+ALTER TABLE personal
+ADD CONSTRAINT chk_dv_personal
+CHECK (UPPER (dv_persona) IN ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'K'));
+
+ALTER TABLE personal
+ADD CONSTRAINT chk_sueldo_personal
+CHECK (sueldo >= 450000);
+
+
+-- ====================
+-- CASO 3 - OBJETO SECUENCIA Y POBLACION DE DATOS
+-- ====================
+
+DROP SEQUENCE seq_comuna;
+
+CREATE SEQUENCE seq_comuna
+    START WITH 1101
+    INCREMENT BY 6;
+    -- NOCACHE
+
+DROP SEQUENCE seq_compania;
+
+CREATE SEQUENCE seq_compania
+    START WITH 10
+    INCREMENT BY 5;
+    -- NOCACHE
+
+
+-- poblar tablas: region, comuna, idioma, compania (más fuerte a más débil)
+
+INSERT INTO region (
+    nombre_region
+) VALUES (
+    'Arica y Parinacota'
+);
+
+INSERT INTO region (
+    nombre_region
+) VALUES (
+    'Metropolitana'
+);
+
+INSERT INTO region (
+    nombre_region
+) VALUES (
+    'La Araucanía'
+);
+
+INSERT INTO comuna (
+    id_comuna,
+    nombre_comuna,
+    id_region
+) VALUES (
+    seq_comuna.NEXTVAL,
+    'Arica',
+    7
+);
+
+INSERT INTO comuna (
+    id_comuna,
+    nombre_comuna,
+    id_region
+) VALUES (
+    seq_comuna.NEXTVAL,
+    'Santiago',
+    9
+);
+
+INSERT INTO comuna (
+    id_comuna,
+    nombre_comuna,
+    id_region
+) VALUES (
+    seq_comuna.NEXTVAL,
+    'Temuco',
+    11
+);
