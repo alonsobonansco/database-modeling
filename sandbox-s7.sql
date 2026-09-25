@@ -492,6 +492,19 @@ SELECT * FROM compania;
 -- Informe 1
 
 -- Informe 2
+/* 
+    NOTA: el resultado con esta query se ve diferente al presentado en las instrucciones específicas
+    porque el modelo entregado en estas no se encuentra ordenado de forma descendiente en la 
+    columna EMPRESA (nombre_empresa)
+*/
+SELECT
+    id_empresa AS CODIGO,
+    nombre_empresa AS EMPRESA,
+    renta_promedio AS "PROM RENTA ACTUAL",
+    pct_aumento + 0.15 AS "PCT AUMENTADO EN 15%",
+    renta_promedio * (pct_aumento + 0.15) AS "RENTA AUMENTADA"
+FROM compania
+ORDER BY renta_promedio ASC, nombre_empresa DESC;
 
 
 /*Usa en las 
