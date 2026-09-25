@@ -494,7 +494,7 @@ SELECT * FROM compania;
 -- Informe 2
 /* 
     NOTA: el resultado con esta query se ve diferente al presentado en las instrucciones específicas
-    porque el modelo entregado en estas no se encuentra ordenado de forma descendiente en la 
+    porque el modelo entregado en estas no se encuentra ordenado de forma descendente en la 
     columna EMPRESA (nombre_empresa)
 */
 SELECT
