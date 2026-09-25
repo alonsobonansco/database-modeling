@@ -76,7 +76,11 @@ CREATE TABLE personal (
     email VARCHAR2(100 CHAR),
     calle VARCHAR2(50 CHAR) NOT NULL,
     numeracion NUMBER(5) NOT NULL,
+
+    /*Se deja NUMBER(5) para ser 100% fiel a la pauta aunque luego se pida
+    una restricción de CHECK para que sea mayor o igual a 450000 (NUMBER(6) como mínimo)*/
     sueldo NUMBER(5) NOT NULL, 
+
     cod_comuna NUMBER(5) NOT NULL,
     cod_region NUMBER(2) NOT NULL,
     cod_genero VARCHAR2(3 CHAR),
@@ -488,3 +492,14 @@ SELECT * FROM compania;
 -- Informe 1
 
 -- Informe 2
+
+
+/*Usa en las 
+sentencias de consulta 
+SQL operadores 
+matemáticos, alias y 
+cláusulas de 
+ordenamiento para 
+solucionar los 
+requerimientos de 
+información planteados.*/
