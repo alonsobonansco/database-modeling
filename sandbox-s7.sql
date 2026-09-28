@@ -44,10 +44,12 @@ CREATE TABLE genero (
     descripcion_genero VARCHAR2(25 CHAR) NOT NULL
 );
 
+-- debería ser clave primaria compuesta
 CREATE TABLE comuna (
-    id_comuna NUMBER(5) CONSTRAINT pk_comuna PRIMARY KEY,
+    id_comuna NUMBER(5),
     nombre_comuna VARCHAR2(50 CHAR) NOT NULL,
-    id_region NUMBER(2) NOT NULL
+    cod_region NUMBER(2) NOT NULL,
+    CONSTRAINT pk_comuna PRIMARY KEY (id_comuna, cod_region)
 );
 
 CREATE TABLE compania (
@@ -79,7 +81,7 @@ CREATE TABLE personal (
 
     /*Se deja NUMBER(5) para ser 100% fiel a la pauta aunque luego se pida
     una restricción de CHECK para que sea mayor o igual a 450000 (NUMBER(6) como mínimo)*/
-    sueldo NUMBER(5) NOT NULL, 
+    sueldo NUMBER(6) NOT NULL, 
 
     cod_comuna NUMBER(5) NOT NULL,
     cod_region NUMBER(2) NOT NULL,
@@ -110,11 +112,12 @@ ALTER TABLE dominio ADD CONSTRAINT pk_dominio PRIMARY KEY (id_idioma, persona_ru
 
 ALTER TABLE comuna 
 ADD CONSTRAINT fk_comuna_region 
-FOREIGN KEY (id_region) REFERENCES region(id_region);
+FOREIGN KEY (cod_region) REFERENCES region(id_region);
 
+--agregué clave foranea compuesta
 ALTER TABLE compania
 ADD CONSTRAINT fk_compania_comuna
-FOREIGN KEY (cod_comuna) REFERENCES comuna(id_comuna);
+FOREIGN KEY (cod_comuna, cod_region) REFERENCES comuna(id_comuna, cod_region);
 
 ALTER TABLE dominio
 ADD CONSTRAINT fk_dominio_idioma
@@ -132,9 +135,10 @@ ALTER TABLE titulacion
 ADD CONSTRAINT fk_titulacion_personal
 FOREIGN KEY (persona_rut) REFERENCES personal(rut_persona);
 
+--agregué la clave foranea compuesta
 ALTER TABLE personal
 ADD CONSTRAINT fk_personal_comuna
-FOREIGN KEY (cod_comuna) REFERENCES comuna(id_comuna);
+FOREIGN KEY (cod_comuna, cod_region) REFERENCES comuna(id_comuna, cod_region);
 
 ALTER TABLE personal
 ADD CONSTRAINT fk_personal_genero
@@ -194,6 +198,7 @@ CREATE SEQUENCE seq_compania
 
 -- Poblamiento de tablas idioma, region, comuna y compania
 
+-- insert idioma identity
 INSERT INTO idioma (
     nombre_idioma
 ) VALUES (
@@ -227,6 +232,7 @@ INSERT INTO idioma (
 -- prueba idiomas
 SELECT * FROM idioma;
 
+-- insert region identity
 INSERT INTO region (
     nombre_region
 ) VALUES (
@@ -248,10 +254,11 @@ INSERT INTO region (
 -- prueba regiones
 SELECT * FROM region;
 
+--insert comuna sequence
 INSERT INTO comuna (
     id_comuna,
     nombre_comuna,
-    id_region
+    cod_region
 ) VALUES (
     seq_comuna.NEXTVAL,
     'Arica',
@@ -261,7 +268,7 @@ INSERT INTO comuna (
 INSERT INTO comuna (
     id_comuna,
     nombre_comuna,
-    id_region
+    cod_region
 ) VALUES (
     seq_comuna.NEXTVAL,
     'Santiago',
@@ -271,7 +278,7 @@ INSERT INTO comuna (
 INSERT INTO comuna (
     id_comuna,
     nombre_comuna,
-    id_region
+    cod_region
 ) VALUES (
     seq_comuna.NEXTVAL,
     'Temuco',
@@ -280,6 +287,8 @@ INSERT INTO comuna (
 
 -- prueba comunas
 SELECT * FROM comuna;
+
+--insert compania sequence
 
 INSERT INTO compania (
     id_empresa,
@@ -490,6 +499,26 @@ SELECT * FROM compania;
 -- ===============================
 
 -- Informe 1
+/*
+Se requiere que el informe incluya los siguientes datos:
+• El nombre de la empresa
+• La dirección completa
+• La renta promedio de cada una
+• La simulación de la renta promedio aplicando el porcentaje de aumento
+correspondiente
+Ordena la información en función de la columna " Renta Promedio " de mayor a menor. En caso de empate, organiza las filas
+alfabéticamente por " Nombre Empresa "
+*/
+
+SELECT 
+    nombre_empresa AS "Nombre Empresa",
+    calle || ' ' || numeracion AS "Dirección",
+    renta_promedio AS "Renta Promedio",
+    renta_promedio * (1 + pct_aumento) AS "Simulación de Renta"
+FROM compania
+ORDER BY 
+    "Renta Promedio" DESC,
+    "Nombre Empresa" ASC;
 
 -- Informe 2
 /* 
