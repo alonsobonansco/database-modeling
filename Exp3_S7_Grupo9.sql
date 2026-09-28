@@ -79,8 +79,7 @@ CREATE TABLE personal (
     calle VARCHAR2(50 CHAR) NOT NULL,
     numeracion NUMBER(5) NOT NULL,
 
-    /*Se deja NUMBER(5) para ser 100% fiel a la pauta aunque luego se pida
-    una restricción de CHECK para que sea mayor o igual a 450000 (NUMBER(6) como mínimo)*/
+    /*Aunque la pauta exige NUMBER(5) para sueldo, luego se pide una restricción CHECK para que sea mayor o igual a 450000 (NUMBER(6) como mínimo)*/
     sueldo NUMBER(6) NOT NULL, 
 
     cod_comuna NUMBER(5) NOT NULL,
@@ -199,296 +198,81 @@ CREATE SEQUENCE seq_compania
 -- Poblamiento de tablas idioma, region, comuna y compania
 
 -- insert idioma identity
-INSERT INTO idioma (
-    nombre_idioma
-) VALUES (
-    'Ingles'
-);
+INSERT INTO idioma (nombre_idioma)
+VALUES ('Ingles');
 
-INSERT INTO idioma (
-    nombre_idioma
-) VALUES (
-    'Chino'
-);
+INSERT INTO idioma (nombre_idioma)
+VALUES ('Chino');
 
-INSERT INTO idioma (
-    nombre_idioma
-) VALUES (
-    'Aleman'
-);
+INSERT INTO idioma (nombre_idioma)
+VALUES ('Aleman');
 
-INSERT INTO idioma (
-    nombre_idioma
-) VALUES (
-    'Espanol'
-);
+INSERT INTO idioma (nombre_idioma)
+VALUES ('Espanol');
 
-INSERT INTO idioma (
-    nombre_idioma
-) VALUES (
-    'Frances'
-);
+INSERT INTO idioma (nombre_idioma)
+VALUES ('Frances');
 
 -- prueba idiomas
 SELECT * FROM idioma;
 
 -- insert region identity
-INSERT INTO region (
-    nombre_region
-) VALUES (
-    'ARICA Y PARINACOTA'
-);
+INSERT INTO region (nombre_region)
+VALUES ('ARICA Y PARINACOTA');
 
-INSERT INTO region (
-    nombre_region
-) VALUES (
-    'METROPOLITANA'
-);
+INSERT INTO region (nombre_region)
+VALUES ('METROPOLITANA');
 
-INSERT INTO region (
-    nombre_region
-) VALUES (
-    'LA ARAUCANIA'
-);
+INSERT INTO region (nombre_region)
+VALUES ('LA ARAUCANIA');
 
 -- prueba regiones
 SELECT * FROM region;
 
 --insert comuna sequence
-INSERT INTO comuna (
-    id_comuna,
-    nombre_comuna,
-    cod_region
-) VALUES (
-    seq_comuna.NEXTVAL,
-    'Arica',
-    7
-);
+INSERT INTO comuna (id_comuna, nombre_comuna, cod_region)
+VALUES (seq_comuna.NEXTVAL, 'Arica', 7);
 
-INSERT INTO comuna (
-    id_comuna,
-    nombre_comuna,
-    cod_region
-) VALUES (
-    seq_comuna.NEXTVAL,
-    'Santiago',
-    9
-);
+INSERT INTO comuna (id_comuna, nombre_comuna, cod_region)
+VALUES (seq_comuna.NEXTVAL, 'Santiago', 9);
 
-INSERT INTO comuna (
-    id_comuna,
-    nombre_comuna,
-    cod_region
-) VALUES (
-    seq_comuna.NEXTVAL,
-    'Temuco',
-    11
-);
+INSERT INTO comuna (id_comuna, nombre_comuna, cod_region)
+VALUES (seq_comuna.NEXTVAL, 'Temuco', 11);
 
 -- prueba comunas
 SELECT * FROM comuna;
 
 --insert compania sequence
 
-INSERT INTO compania (
-    id_empresa,
-    nombre_empresa,
-    calle,
-    numeracion,
-    renta_promedio,
-    pct_aumento,
-    cod_comuna,
-    cod_region
-) VALUES (
-    seq_compania.NEXTVAL,
-    'CCyRojas',
-    'Amapolas',
-    506,
-    1857000,
-    0.5,
-    1101,
-    7
-);
+INSERT INTO compania (id_empresa, nombre_empresa, calle, numeracion, renta_promedio, pct_aumento, cod_comuna, cod_region) 
+VALUES (seq_compania.NEXTVAL, 'CCyRojas', 'Amapolas', 506, 1857000, 0.5, 1101, 7);
 
-INSERT INTO compania (
-    id_empresa,
-    nombre_empresa,
-    calle,
-    numeracion,
-    renta_promedio,
-    pct_aumento,
-    cod_comuna,
-    cod_region
-) VALUES (
-    seq_compania.NEXTVAL,
-    'SenTTy',
-    'Los Alamos',
-    3490,
-    897000,
-    0.025,
-    1101,
-    7
-);
+INSERT INTO compania (id_empresa, nombre_empresa, calle, numeracion, renta_promedio, pct_aumento, cod_comuna, cod_region)
+VALUES (seq_compania.NEXTVAL, 'SenTTy', 'Los Alamos', 3490, 897000, 0.025, 1101, 7);
 
-INSERT INTO compania (
-    id_empresa,
-    nombre_empresa,
-    calle,
-    numeracion,
-    renta_promedio,
-    pct_aumento,
-    cod_comuna,
-    cod_region
-) VALUES (
-    seq_compania.NEXTVAL,
-    'Praxia LTDA',
-    'Las Camelias',
-    11098,
-    2157000,
-    0.035,
-    1107,
-    9
-);
+INSERT INTO compania (id_empresa, nombre_empresa, calle, numeracion, renta_promedio, pct_aumento, cod_comuna, cod_region)
+VALUES (seq_compania.NEXTVAL, 'Praxia LTDA', 'Las Camelias', 11098, 2157000, 0.035, 1107, 9);
 
-INSERT INTO compania (
-    id_empresa,
-    nombre_empresa,
-    calle,
-    numeracion,
-    renta_promedio,
-    pct_aumento,
-    cod_comuna,
-    cod_region
-) VALUES (
-    seq_compania.NEXTVAL,
-    'TIC spa',
-    'FLORES S.A.',
-    4357,
-    857000,
-    NULL,
-    1107,
-    9
-);
+INSERT INTO compania (id_empresa, nombre_empresa, calle, numeracion, renta_promedio, pct_aumento, cod_comuna, cod_region)
+VALUES (seq_compania.NEXTVAL, 'TIC spa', 'FLORES S.A.', 4357, 857000, NULL, 1107, 9);
 
-INSERT INTO compania (
-    id_empresa,
-    nombre_empresa,
-    calle,
-    numeracion,
-    renta_promedio,
-    pct_aumento,
-    cod_comuna,
-    cod_region
-) VALUES (
-    seq_compania.NEXTVAL,
-    'SANTANA LTDA',
-    'AVDA VIC. MACKENA',
-    106,
-    757000,
-    0.015,
-    1101,
-    7
-);
+INSERT INTO compania (id_empresa, nombre_empresa, calle, numeracion, renta_promedio, pct_aumento, cod_comuna, cod_region)
+VALUES (seq_compania.NEXTVAL, 'SANTANA LTDA', 'AVDA VIC. MACKENA', 106, 757000, 0.015, 1101, 7);
 
-INSERT INTO compania (
-    id_empresa,
-    nombre_empresa,
-    calle,
-    numeracion,
-    renta_promedio,
-    pct_aumento,
-    cod_comuna,
-    cod_region
-) VALUES (
-    seq_compania.NEXTVAL,
-    'FLORES Y ASOCIADOS',
-    'PEDRO LATORRE',
-    557,
-    589000,
-    0.015,
-    1107,
-    9
-);
+INSERT INTO compania (id_empresa, nombre_empresa, calle, numeracion, renta_promedio, pct_aumento, cod_comuna, cod_region)
+VALUES (seq_compania.NEXTVAL, 'FLORES Y ASOCIADOS', 'PEDRO LATORRE', 557, 589000, 0.015, 1107, 9);
 
-INSERT INTO compania (
-    id_empresa,
-    nombre_empresa,
-    calle,
-    numeracion,
-    renta_promedio,
-    pct_aumento,
-    cod_comuna,
-    cod_region
-) VALUES (
-    seq_compania.NEXTVAL,
-    'J.A. HOFFMAN',
-    'LATINA D.32',
-    509,
-    1857000,
-    0.025,
-    1113,
-    11
-);
+INSERT INTO compania (id_empresa, nombre_empresa, calle, numeracion, renta_promedio, pct_aumento, cod_comuna, cod_region)
+VALUES (seq_compania.NEXTVAL, 'J.A. HOFFMAN', 'LATINA D.32', 509, 1857000, 0.025, 1113, 11);
 
-INSERT INTO compania (
-    id_empresa,
-    nombre_empresa,
-    calle,
-    numeracion,
-    renta_promedio,
-    pct_aumento,
-    cod_comuna,
-    cod_region
-) VALUES (
-    seq_compania.NEXTVAL,
-    'CAGLIARI D.',
-    'ALAMEDA',
-    206,
-    1857000,
-    NULL,
-    1107,
-    9
-);
+INSERT INTO compania (id_empresa, nombre_empresa, calle, numeracion, renta_promedio, pct_aumento, cod_comuna, cod_region)
+VALUES (seq_compania.NEXTVAL, 'CAGLIARI D.', 'ALAMEDA', 206, 1857000, NULL, 1107, 9);
 
-INSERT INTO compania (
-    id_empresa,
-    nombre_empresa,
-    calle,
-    numeracion,
-    renta_promedio,
-    pct_aumento,
-    cod_comuna,
-    cod_region
-) VALUES (
-    seq_compania.NEXTVAL,
-    'Rojas HNOS LTDA',
-    'SUCRE',
-    106,
-    957000,
-    0.005,
-    1113,
-    11
-);
+INSERT INTO compania (id_empresa, nombre_empresa, calle, numeracion, renta_promedio, pct_aumento, cod_comuna, cod_region)
+VALUES (seq_compania.NEXTVAL, 'Rojas HNOS LTDA', 'SUCRE', 106, 957000, 0.005, 1113, 11);
 
-INSERT INTO compania (
-    id_empresa,
-    nombre_empresa,
-    calle,
-    numeracion,
-    renta_promedio,
-    pct_aumento,
-    cod_comuna,
-    cod_region
-) VALUES (
-    seq_compania.NEXTVAL,
-    'FRIENDS P. S.A',
-    'SUECIA',
-    506,
-    857000,
-    0.015,
-    1113,
-    11
-);
+INSERT INTO compania (id_empresa, nombre_empresa, calle, numeracion, renta_promedio, pct_aumento, cod_comuna, cod_region)
+VALUES (seq_compania.NEXTVAL, 'FRIENDS P. S.A', 'SUECIA', 506, 857000, 0.015, 1113, 11);
 
 -- prueba companias
 SELECT * FROM compania;
@@ -534,14 +318,3 @@ SELECT
     renta_promedio * (pct_aumento + 0.15) AS "RENTA AUMENTADA"
 FROM compania
 ORDER BY renta_promedio ASC, nombre_empresa DESC;
-
-
-/*Usa en las 
-sentencias de consulta 
-SQL operadores 
-matemáticos, alias y 
-cláusulas de 
-ordenamiento para 
-solucionar los 
-requerimientos de 
-información planteados.*/
