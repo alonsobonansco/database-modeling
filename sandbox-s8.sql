@@ -109,7 +109,7 @@ CREATE TABLE estandar (
 );
 
 CREATE TABLE premium (
-    cl_rut NUMBER(8),
+    cl_rut NUMBER(8) CONSTRAINT pk_premium PRIMARY KEY,
     pesos_clientes NUMBER(10) NOT NULL,
     monto_credito NUMBER(10)
 );
