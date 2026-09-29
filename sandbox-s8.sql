@@ -85,10 +85,10 @@ CREATE TABLE automovil (
     cant_puertas NUMBER(1) NOT NULL,
     km NUMBER(6) NOT NULL,
     color VARCHAR2(30 CHAR) NOT NULL,
-    cod_tipo_auto CHAR(3) NOT NULL, -- F TIPO_AUTOMOVIL
-    cod_modelo NUMBER(5) NOT NULL, -- F MODELO
-    cod_marca NUMBER(2) NOT NULL, -- F MARCA
-    cl_rut NUMBER(8) NOT NULL -- F CLIENTE
+    cod_tipo_auto CHAR(3) NOT NULL,
+    cod_modelo NUMBER(5) NOT NULL,
+    cod_marca NUMBER(2) NOT NULL,
+    cl_rut NUMBER(8) NOT NULL
 );
 
 CREATE TABLE cliente (
@@ -104,23 +104,23 @@ CREATE TABLE cliente (
 );
 
 CREATE TABLE estandar (
-    cl_rut NUMBER(8) CONSTRAINT pk_estandar PRIMARY KEY, -- PF CLIENTE (pk_normal)
+    cl_rut NUMBER(8) CONSTRAINT pk_estandar PRIMARY KEY,
     puntaje_fidelidad NUMBER(10) NOT NULL
 );
 
 CREATE TABLE premium (
-    cl_rut NUMBER(8), -- PF CLIENTE
+    cl_rut NUMBER(8),
     pesos_clientes NUMBER(10) NOT NULL,
     monto_credito NUMBER(10)
 );
 
 CREATE TABLE mantencion (
     num_mantencion NUMBER(4) CONSTRAINT pk_mantencion PRIMARY KEY,
-    cod_sucursal CHAR(3) NOT NULL, -- F SUCURSAL
+    cod_sucursal CHAR(3) NOT NULL,
     fecha_ingreso DATE NOT NULL,
     fecha_salida DATE,
-    patente_auto CHAR(8), -- F AUTOMOVIL
-    cod_mecanico NUMBER(5) NOT NULL, -- F MECANICO
+    patente_auto CHAR(8),
+    cod_mecanico NUMBER(5) NOT NULL,
     costo_total NUMBER(7) NOT NULL,
     estado VARCHAR2(15 CHAR)
 );
@@ -190,4 +190,105 @@ ALTER TABLE mantencion ADD CONSTRAINT chk_mantencion_estado CHECK (estado IN ('R
 -- =======================
 -- ======= CASO 3 ========
 -- =======================
+
+DROP SEQUENCE seq_servicio;
+DROP SEQUENCE seq_ciudad;
+
+-- servicio: id_servicio secuencia (inicia en 400, se aumenta en 2)
+CREATE SEQUENCE seq_servicio START WITH 400 INCREMENT BY 2;
+
+-- ciudad: id_ciudad secuencia (inicia en 165, se aumenta en 5)
+CREATE SEQUENCE seq_ciudad START WITH 165 INCREMENT BY 5;
+
+
+-- valores mecanicos
+
+INSERT INTO mecanico (pnombre, snombre, apaterno, amaterno, bono_jefatura, sueldo, monto_impuestos, cod_supervisor)
+VALUES ('Jorge', 'Pablo', 'Soto', 'Sierpe', 5400000, 2759000, 223580, NULL);
+
+INSERT INTO mecanico (pnombre, snombre, apaterno, amaterno, bono_jefatura, sueldo, monto_impuestos, cod_supervisor)
+VALUES ('Pedro', 'Jose', 'Manriquez', 'Corral', NULL, 759000, 23980, NULL);
+
+INSERT INTO mecanico (pnombre, snombre, apaterno, amaterno, bono_jefatura, sueldo, monto_impuestos, cod_supervisor)
+VALUES ('Sandra', 'Josefa', 'Letelier', 'S.', 0, 659000, 22358, 460);
+
+INSERT INTO mecanico (pnombre, snombre, apaterno, amaterno, bono_jefatura, sueldo, monto_impuestos, cod_supervisor)
+VALUES ('Felipe', 'M.', 'Vidal', 'A.', NULL, 759000, 23580, 460);
+
+INSERT INTO mecanico (pnombre, snombre, apaterno, amaterno, bono_jefatura, sueldo, monto_impuestos, cod_supervisor)
+VALUES ('Jose', 'Miguel', 'Troncoso', 'B.', NULL, 659000, 44580, 474);
+ 
+INSERT INTO mecanico (pnombre, snombre, apaterno, amaterno, bono_jefatura, sueldo, monto_impuestos, cod_supervisor)
+VALUES ('Juan', 'Pablo', 'Sánchez', 'R.', NULL, 859000, 23380, 474);
+
+INSERT INTO mecanico (pnombre, snombre, apaterno, amaterno, bono_jefatura, sueldo, monto_impuestos, cod_supervisor)
+VALUES ('Carlos', 'Felipe', 'Soto', 'J.', 0, 597000, 23580, 474);
+
+INSERT INTO mecanico (pnombre, snombre, apaterno, amaterno, bono_jefatura, sueldo, monto_impuestos, cod_supervisor)
+VALUES ('Alberto', 'P.', 'Cerda', 'Ramírez', NULL, 559000, 22380, 460);
+
+INSERT INTO mecanico (pnombre, snombre, apaterno, amaterno, bono_jefatura, sueldo, monto_impuestos, cod_supervisor)
+VALUES ('Alejandra', 'Gabriela', 'Infanti', 'R.', NULL, 659000, 22380, 460);
+
+INSERT INTO mecanico (pnombre, snombre, apaterno, amaterno, bono_jefatura, sueldo, monto_impuestos, cod_supervisor)
+VALUES ('Roberto', 'Patricio', 'Gutierrez', 'Sosa', NULL, 859000, 22380, 460);
+
+SELECT * FROM mecanico;
+
+-- valores servicios
+
+INSERT INTO servicio (id_servicio, descripcion, costo) VALUES (seq_servicio.NEXTVAL, 'Cambio Luces', 45000);
+INSERT INTO servicio (id_servicio, descripcion, costo) VALUES (seq_servicio.NEXTVAL, 'Desabolladura', 67000);
+INSERT INTO servicio (id_servicio, descripcion, costo) VALUES (seq_servicio.NEXTVAL, 'Revisión Frenos', 30000);
+INSERT INTO servicio (id_servicio, descripcion, costo) VALUES (seq_servicio.NEXTVAL, 'Cambio Puerta Trasera', 50000);
+
+SELECT * FROM servicio;
+
+-- valores paises
+
+INSERT INTO pais (nom_pais) VALUES ('Chile');
+INSERT INTO pais (nom_pais) VALUES ('Perú');
+INSERT INTO pais (nom_pais) VALUES ('Colombia');
+
+SELECT * FROM pais;
+
+-- valores ciudades
+
+INSERT INTO ciudad (id_ciudad, nom_ciudad, cod_pais) VALUES (seq_ciudad.NEXTVAL, 'Santiago', 9);
+INSERT INTO ciudad (id_ciudad, nom_ciudad, cod_pais) VALUES (seq_ciudad.NEXTVAL, 'Lima', 12);
+INSERT INTO ciudad (id_ciudad, nom_ciudad, cod_pais) VALUES (seq_ciudad.NEXTVAL, 'Bogotá', 15);
+
+SELECT * FROM ciudad;
+
+-- valores sucursales
+
+INSERT INTO sucursal (id_sucursal, nom_sucursal, calle, num_calle, cod_ciudad) 
+VALUES ('S01', 'Providencia', 'Av. A. Varas', 234, 165);
+
+INSERT INTO sucursal (id_sucursal, nom_sucursal, calle, num_calle, cod_ciudad)
+VALUES ('S02', 'Las 4 esquinas', 'Av. Latina', 669, 170);
+
+INSERT INTO sucursal (id_sucursal, nom_sucursal, calle, num_calle, cod_ciudad)
+VALUES ('S03', 'El Cafetero', 'Av. El Faro', 900, 175);
+
+SELECT * FROM sucursal;
+
+-- valores mantenciones
+
+INSERT INTO mantencion (num_mantencion, cod_sucursal, fecha_ingreso, fecha_salida, patente_auto, cod_mecanico, estado)
+VALUES (101, 'S01', TO_DATE('12-04-2023', 'DD-MM-YYYY'), NULL, NULL, 481, 'Reserva');
+
+INSERT INTO mantencion (num_mantencion, cod_sucursal, fecha_ingreso, fecha_salida, patente_auto, cod_mecanico, estado)
+VALUES (102, 'S02', TO_DATE('21-02-2023', 'DD-MM-YYYY'), TO_DATE('21-02-2023', 'DD-MM-YYYY'), NULL, 502, 'Entregado');
+
+INSERT INTO mantencion (num_mantencion, cod_sucursal, fecha_ingreso, fecha_salida, patente_auto, cod_mecanico, estado)
+VALUES (103, 'S02', TO_DATE('09-10-2023', 'DD-MM-YYYY'), NULL, NULL, 502, 'Anulado');
+
+INSERT INTO mantencion (num_mantencion, cod_sucursal, fecha_ingreso, fecha_salida, patente_auto, cod_mecanico, estado)
+VALUES (104, 'S03', TO_DATE('11-08-2023', 'DD-MM-YYYY'), TO_DATE('18-08-2023', 'DD-MM-YYYY'), NULL, 509, 'Entregado');
+
+INSERT INTO mantencion (num_mantencion, cod_sucursal, fecha_ingreso, fecha_salida, patente_auto, cod_mecanico, estado)
+VALUES (105, 'S03', TO_DATE('03-12-2023', 'DD-MM-YYYY'), NULL, NULL, 509, 'Ingresado');
+
+SELECT * FROM mantencion;
 
