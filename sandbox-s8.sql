@@ -292,3 +292,32 @@ VALUES (105, 'S03', TO_DATE('03-12-2023', 'DD-MM-YYYY'), NULL, NULL, 509, 'Ingre
 
 SELECT * FROM mantencion;
 
+
+-- =======================
+-- ======= CASO 4 ========
+-- =======================
+
+-- Informe 1
+SELECT
+    cod_mecanico AS "ID MECANICO",
+    pnombre || ' ' || apaterno AS "NOMBRE MECANICO",    
+    sueldo AS SALARIO,
+    monto_impuestos AS "IMPUESTO ACTUAL",
+    monto_impuestos * 0.8 AS "IMPUESTO REBAJADO", -- 80% de los impuestos
+    sueldo - (monto_impuestos * 0.8) AS "SUELDO CON REBAJA IMPUESTOS" -- sueldo - impuestos rebajados
+FROM mecanico
+WHERE monto_impuestos < 40000 AND bono_jefatura IS NULL
+ORDER BY monto_impuestos DESC, apaterno ASC;
+
+-- order: impuestos actuales desc; apaterno asc (a-z)
+
+-- Informe 2
+SELECT
+    cod_mecanico AS "IDENTIFICADOR",
+    pnombre || ' ' || snombre || ' ' || apaterno AS "MECANICO",
+    sueldo AS "SALARIO ACTUAL",
+    sueldo * 0.05 AS "AJUSTE",
+    sueldo + (sueldo * 0.05) AS "SALARIO_REAJUSTADO"
+FROM mecanico
+WHERE sueldo BETWEEN 600000 AND 900000 OR cod_supervisor IS NULL
+ORDER BY sueldo ASC, "MECANICO" DESC;
