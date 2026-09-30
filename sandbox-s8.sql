@@ -16,6 +16,9 @@ DROP TABLE servicio;
 DROP TABLE tipo_automovil;
 DROP TABLE mecanico;
 
+DROP SEQUENCE seq_servicio;
+DROP SEQUENCE seq_ciudad;
+
 
 -- =======================
 -- ======= CASO 1 ========
@@ -115,54 +118,84 @@ CREATE TABLE premium (
 );
 
 CREATE TABLE mantencion (
-    num_mantencion NUMBER(4) CONSTRAINT pk_mantencion PRIMARY KEY,
+    num_mantencion NUMBER(4),
     cod_sucursal CHAR(3) NOT NULL,
     fecha_ingreso DATE NOT NULL,
     fecha_salida DATE,
     patente_auto CHAR(8),
     cod_mecanico NUMBER(5) NOT NULL,
     costo_total NUMBER(7) NOT NULL,
-    estado VARCHAR2(15 CHAR)
+    estado VARCHAR2(15 CHAR),
+    CONSTRAINT pk_mantencion PRIMARY KEY (num_mantencion, cod_sucursal)
 );
 
 CREATE TABLE detalle_servicio (
     mantencion_num NUMBER(4),
+    cod_sucursal CHAR(3),
     cod_servicio NUMBER(3),
     descuento_serv NUMBER(4,3) NOT NULL,
     cantidad NUMBER(3) NOT NULL,
-    CONSTRAINT pk_detalle_servicio PRIMARY KEY (mantencion_num, cod_servicio)
+    CONSTRAINT pk_detalle_servicio PRIMARY KEY (mantencion_num, cod_sucursal, cod_servicio)
 );
 
 
 -- FOREIGN KEYS
 
-ALTER TABLE ciudad ADD CONSTRAINT fk_ciudad_pais FOREIGN KEY (cod_pais) REFERENCES pais (id_pais);
+ALTER TABLE ciudad
+ADD CONSTRAINT fk_ciudad_pais
+FOREIGN KEY (cod_pais) REFERENCES pais (id_pais);
 
-ALTER TABLE sucursal ADD CONSTRAINT fk_sucursal_ciudad FOREIGN KEY (cod_ciudad) REFERENCES ciudad (id_ciudad);
+ALTER TABLE sucursal
+ADD CONSTRAINT fk_sucursal_ciudad
+FOREIGN KEY (cod_ciudad) REFERENCES ciudad (id_ciudad);
 
-ALTER TABLE mecanico ADD CONSTRAINT fk_mecanico_supervisor FOREIGN KEY (cod_supervisor) REFERENCES mecanico (cod_mecanico);
+ALTER TABLE mecanico
+ADD CONSTRAINT fk_mecanico_supervisor
+FOREIGN KEY (cod_supervisor) REFERENCES mecanico (cod_mecanico);
 
 ALTER TABLE detalle_servicio
-ADD CONSTRAINT fk_detalle_servicio_mantencion FOREIGN KEY (mantencion_num) REFERENCES mantencion (num_mantencion)
-ADD CONSTRAINT fk_detalle_servicio_servicio FOREIGN KEY (cod_servicio) REFERENCES servicio (id_servicio);
+ADD CONSTRAINT fk_detalle_servicio_mantencion
+FOREIGN KEY (mantencion_num, cod_sucursal) REFERENCES mantencion (num_mantencion, cod_sucursal);
 
-ALTER TABLE modelo ADD CONSTRAINT fk_modelo_marca FOREIGN KEY (marca_id) REFERENCES marca (id_marca);
+ALTER TABLE detalle_servicio
+ADD CONSTRAINT fk_detalle_servicio_servicio
+FOREIGN KEY (cod_servicio) REFERENCES servicio (id_servicio);
 
-ALTER TABLE estandar ADD CONSTRAINT fk_estandar_cliente FOREIGN KEY (cl_rut) REFERENCES cliente (rut);
+ALTER TABLE modelo
+ADD CONSTRAINT fk_modelo_marca
+FOREIGN KEY (marca_id) REFERENCES marca (id_marca);
 
-ALTER TABLE premium ADD CONSTRAINT fk_premium_cliente FOREIGN KEY (cl_rut) REFERENCES cliente (rut);
+ALTER TABLE estandar
+ADD CONSTRAINT fk_estandar_cliente
+FOREIGN KEY (cl_rut) REFERENCES cliente (rut);
 
-ALTER TABLE automovil ADD CONSTRAINT fk_automovil_tipo_automovil FOREIGN KEY (cod_tipo_auto) REFERENCES tipo_automovil (id_tipo);
+ALTER TABLE premium
+ADD CONSTRAINT fk_premium_cliente
+FOREIGN KEY (cl_rut) REFERENCES cliente (rut);
 
-ALTER TABLE automovil ADD CONSTRAINT fk_automovil_modelo FOREIGN KEY (cod_modelo, cod_marca) REFERENCES modelo (id_modelo, marca_id);
+ALTER TABLE automovil
+ADD CONSTRAINT fk_automovil_tipo_automovil
+FOREIGN KEY (cod_tipo_auto) REFERENCES tipo_automovil (id_tipo);
 
-ALTER TABLE automovil ADD CONSTRAINT fk_automovil_cliente FOREIGN KEY (cl_rut) REFERENCES cliente (rut);
+ALTER TABLE automovil
+ADD CONSTRAINT fk_automovil_modelo
+FOREIGN KEY (cod_modelo, cod_marca) REFERENCES modelo (id_modelo, marca_id);
 
-ALTER TABLE mantencion ADD CONSTRAINT fk_mantencion_sucursal FOREIGN KEY (cod_sucursal) REFERENCES sucursal (id_sucursal);
+ALTER TABLE automovil
+ADD CONSTRAINT fk_automovil_cliente
+FOREIGN KEY (cl_rut) REFERENCES cliente (rut);
 
-ALTER TABLE mantencion ADD CONSTRAINT fk_mantencion_automovil FOREIGN KEY (patente_auto) REFERENCES automovil (patente);
+ALTER TABLE mantencion
+ADD CONSTRAINT fk_mantencion_sucursal
+FOREIGN KEY (cod_sucursal) REFERENCES sucursal (id_sucursal);
 
-ALTER TABLE mantencion ADD CONSTRAINT fk_mantencion_mecanico FOREIGN KEY (cod_mecanico) REFERENCES mecanico (cod_mecanico);
+ALTER TABLE mantencion
+ADD CONSTRAINT fk_mantencion_automovil
+FOREIGN KEY (patente_auto) REFERENCES automovil (patente);
+
+ALTER TABLE mantencion
+ADD CONSTRAINT fk_mantencion_mecanico
+FOREIGN KEY (cod_mecanico) REFERENCES mecanico (cod_mecanico);
 
 
 -- =======================
@@ -175,24 +208,28 @@ ALTER TABLE mantencion DROP (costo_total);
 -- Ajustar fk en detalle_servicio
 
 -- email en cliente único
-ALTER TABLE cliente ADD CONSTRAINT uk_email UNIQUE (email);
+ALTER TABLE cliente 
+ADD CONSTRAINT uk_email UNIQUE (email);
 
 -- check a dv en cliente
-ALTER TABLE cliente ADD CONSTRAINT chk_cliente_dv CHECK (dv BETWEEN '0' AND '9' OR dv = 'K'); -- dos ==?
+ALTER TABLE cliente 
+ADD CONSTRAINT chk_cliente_dv 
+CHECK (dv BETWEEN '0' AND '9' OR dv = 'K');
 
 -- sueldo en mecanico mayor o igual a 510.000
-ALTER TABLE mecanico ADD CONSTRAINT chk_mecanico_sueldo CHECK (sueldo >= 510000);
+ALTER TABLE mecanico 
+ADD CONSTRAINT chk_mecanico_sueldo 
+CHECK (sueldo >= 510000);
 
 -- estado mantencion check 'Reserva, Ingresado, Entregado, Anulado'
-ALTER TABLE mantencion ADD CONSTRAINT chk_mantencion_estado CHECK (estado IN ('Reserva', 'Ingresado', 'Entregado', 'Anulado'));
+ALTER TABLE mantencion 
+ADD CONSTRAINT chk_mantencion_estado 
+CHECK (estado IN ('Reserva', 'Ingresado', 'Entregado', 'Anulado'));
 
 
 -- =======================
 -- ======= CASO 3 ========
 -- =======================
-
-DROP SEQUENCE seq_servicio;
-DROP SEQUENCE seq_ciudad;
 
 -- servicio: id_servicio secuencia (inicia en 400, se aumenta en 2)
 CREATE SEQUENCE seq_servicio START WITH 400 INCREMENT BY 2;
@@ -307,9 +344,7 @@ SELECT
     sueldo - (monto_impuestos * 0.8) AS "SUELDO CON REBAJA IMPUESTOS" -- sueldo - impuestos rebajados
 FROM mecanico
 WHERE monto_impuestos < 40000 AND bono_jefatura IS NULL
-ORDER BY monto_impuestos DESC, apaterno ASC;
-
--- order: impuestos actuales desc; apaterno asc (a-z)
+ORDER BY monto_impuestos DESC, apaterno ASC; -- order: impuestos actuales desc; apaterno asc (a-z)
 
 -- Informe 2
 SELECT
