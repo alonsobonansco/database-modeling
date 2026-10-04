@@ -154,10 +154,6 @@ ADD CONSTRAINT fk_mecanico_supervisor
 FOREIGN KEY (cod_supervisor) REFERENCES mecanico (cod_mecanico);
 
 ALTER TABLE detalle_servicio
-ADD CONSTRAINT fk_detalle_servicio_mantencion
-FOREIGN KEY (mantencion_num, cod_sucursal) REFERENCES mantencion (num_mantencion, cod_sucursal);
-
-ALTER TABLE detalle_servicio
 ADD CONSTRAINT fk_detalle_servicio_servicio
 FOREIGN KEY (cod_servicio) REFERENCES servicio (id_servicio);
 
@@ -206,6 +202,9 @@ FOREIGN KEY (cod_mecanico) REFERENCES mecanico (cod_mecanico);
 ALTER TABLE mantencion DROP (costo_total);
 
 -- Ajustar fk en detalle_servicio
+ALTER TABLE detalle_servicio
+ADD CONSTRAINT fk_detalle_servicio_mantencion
+FOREIGN KEY (mantencion_num, cod_sucursal) REFERENCES mantencion (num_mantencion, cod_sucursal);
 
 -- email en cliente único
 ALTER TABLE cliente 
@@ -270,7 +269,9 @@ VALUES ('Alejandra', 'Gabriela', 'Infanti', 'R.', NULL, 659000, 22380, 460);
 INSERT INTO mecanico (pnombre, snombre, apaterno, amaterno, bono_jefatura, sueldo, monto_impuestos, cod_supervisor)
 VALUES ('Roberto', 'Patricio', 'Gutierrez', 'Sosa', NULL, 859000, 22380, 460);
 
-SELECT * FROM mecanico;
+
+COMMIT;
+
 
 -- valores servicios
 
@@ -279,7 +280,9 @@ INSERT INTO servicio (id_servicio, descripcion, costo) VALUES (seq_servicio.NEXT
 INSERT INTO servicio (id_servicio, descripcion, costo) VALUES (seq_servicio.NEXTVAL, 'Revisión Frenos', 30000);
 INSERT INTO servicio (id_servicio, descripcion, costo) VALUES (seq_servicio.NEXTVAL, 'Cambio Puerta Trasera', 50000);
 
-SELECT * FROM servicio;
+
+COMMIT;
+
 
 -- valores paises
 
@@ -287,7 +290,9 @@ INSERT INTO pais (nom_pais) VALUES ('Chile');
 INSERT INTO pais (nom_pais) VALUES ('Perú');
 INSERT INTO pais (nom_pais) VALUES ('Colombia');
 
-SELECT * FROM pais;
+
+COMMIT;
+
 
 -- valores ciudades
 
@@ -295,7 +300,9 @@ INSERT INTO ciudad (id_ciudad, nom_ciudad, cod_pais) VALUES (seq_ciudad.NEXTVAL,
 INSERT INTO ciudad (id_ciudad, nom_ciudad, cod_pais) VALUES (seq_ciudad.NEXTVAL, 'Lima', 12);
 INSERT INTO ciudad (id_ciudad, nom_ciudad, cod_pais) VALUES (seq_ciudad.NEXTVAL, 'Bogotá', 15);
 
-SELECT * FROM ciudad;
+
+COMMIT;
+
 
 -- valores sucursales
 
@@ -308,7 +315,9 @@ VALUES ('S02', 'Las 4 esquinas', 'Av. Latina', 669, 170);
 INSERT INTO sucursal (id_sucursal, nom_sucursal, calle, num_calle, cod_ciudad)
 VALUES ('S03', 'El Cafetero', 'Av. El Faro', 900, 175);
 
-SELECT * FROM sucursal;
+
+COMMIT;
+
 
 -- valores mantenciones
 
@@ -327,7 +336,9 @@ VALUES (104, 'S03', TO_DATE('11-08-2023', 'DD-MM-YYYY'), TO_DATE('18-08-2023', '
 INSERT INTO mantencion (num_mantencion, cod_sucursal, fecha_ingreso, fecha_salida, patente_auto, cod_mecanico, estado)
 VALUES (105, 'S03', TO_DATE('03-12-2023', 'DD-MM-YYYY'), NULL, NULL, 509, 'Ingresado');
 
-SELECT * FROM mantencion;
+
+COMMIT;
+
 
 
 -- =======================
@@ -336,23 +347,23 @@ SELECT * FROM mantencion;
 
 -- Informe 1
 SELECT
-    cod_mecanico AS "ID MECANICO",
-    pnombre || ' ' || apaterno AS "NOMBRE MECANICO",    
+    cod_mecanico AS ID_MECANICO,
+    pnombre || ' ' || apaterno AS NOMBRE_MECANICO,    
     sueldo AS SALARIO,
-    monto_impuestos AS "IMPUESTO ACTUAL",
-    monto_impuestos * 0.8 AS "IMPUESTO REBAJADO", -- 80% de los impuestos
-    sueldo - (monto_impuestos * 0.8) AS "SUELDO CON REBAJA IMPUESTOS" -- sueldo - impuestos rebajados
+    monto_impuestos AS IMPUESTO_ACTUAL,
+    ROUND(monto_impuestos * 0.8) AS IMPUESTO_REBAJADO, -- 80% de los impuestos
+    sueldo - ROUND(monto_impuestos * 0.8) AS SUELDO_CON_REBAJA_IMPUESTOS -- sueldo - impuestos rebajados
 FROM mecanico
 WHERE monto_impuestos < 40000 AND bono_jefatura IS NULL
 ORDER BY monto_impuestos DESC, apaterno ASC; -- order: impuestos actuales desc; apaterno asc (a-z)
 
 -- Informe 2
 SELECT
-    cod_mecanico AS "IDENTIFICADOR",
-    pnombre || ' ' || snombre || ' ' || apaterno AS "MECANICO",
-    sueldo AS "SALARIO ACTUAL",
-    sueldo * 0.05 AS "AJUSTE",
-    sueldo + (sueldo * 0.05) AS "SUELDO_REAJUSTADO"
+    cod_mecanico AS IDENTIFICADOR,
+    pnombre || ' ' || snombre || ' ' || apaterno AS MECANICO,
+    sueldo AS SALARIO_ACTUAL,
+    sueldo * 0.05 AS AJUSTE,
+    sueldo + (sueldo * 0.05) AS SUELDO_REAJUSTADO
 FROM mecanico
-WHERE sueldo BETWEEN 600000 AND 900000 OR cod_supervisor IS NULL
+WHERE (sueldo BETWEEN 600000 AND 900000) OR cod_supervisor IS NULL
 ORDER BY sueldo ASC, "MECANICO" DESC;
