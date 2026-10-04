@@ -362,8 +362,9 @@ SELECT
     cod_mecanico AS IDENTIFICADOR,
     pnombre || ' ' || snombre || ' ' || apaterno AS MECANICO,
     sueldo AS SALARIO_ACTUAL,
-    sueldo * 0.05 AS AJUSTE,
-    sueldo + (sueldo * 0.05) AS SUELDO_REAJUSTADO
+    ROUND(sueldo * 0.05) AS AJUSTE,
+    sueldo + ROUND(sueldo * 0.05) AS SUELDO_REAJUSTADO
 FROM mecanico
 WHERE (sueldo BETWEEN 600000 AND 900000) OR cod_supervisor IS NULL
 ORDER BY sueldo ASC, "MECANICO" DESC;
+
