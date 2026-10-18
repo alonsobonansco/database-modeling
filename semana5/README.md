@@ -21,15 +21,18 @@ El proyecto consiste en normalizar, corregir y completar un diseño conceptual p
 
 ### MER-E
 
-<img width="1205" height="868" alt="logical__s5" src="https://github.com/user-attachments/assets/38abf70c-5c9d-44ac-a698-41cdd5046e26" />
+<img width="1205" height="868" alt="Logical" src="https://github.com/user-attachments/assets/ba539b0d-bcbb-4b01-a89c-846a28490a18" />
+
 
 ### Modelo Relacional Normalizado
 
-<img width="1235" height="834" alt="relational_s5" src="https://github.com/user-attachments/assets/13e86df8-1fd7-4ae1-8be2-ab0d094b1d95" />
+<img width="1235" height="834" alt="Relational_1" src="https://github.com/user-attachments/assets/f7fef14f-46d0-4beb-9a86-c93323662f76" />
+
 
 ### Script DDL
 
-<img width="774" height="1023" alt="script_ddl" src="https://github.com/user-attachments/assets/9879540b-88d5-4b05-970f-baaef2bd2950" />
+<img width="774" height="1023" alt="Sin título" src="https://github.com/user-attachments/assets/d4c5de77-f5a1-4a2e-abc9-cb0ee0b8f054" />
+
 
 ---
 
