@@ -12,11 +12,13 @@
 
 ### Notación de Barker
 
-<img width="1235" height="764" alt="Barker_s3" src="https://github.com/user-attachments/assets/beaea9f5-2166-4994-8d05-86e1cc003ae1" />
+<img width="1235" height="764" alt="Barker_s3" src="https://github.com/user-attachments/assets/8e4e358d-2869-4cd3-bd07-f0be2a34824c" />
+
 
 ### Notación de Bachman
 
-<img width="1235" height="764" alt="Bachman_s3" src="https://github.com/user-attachments/assets/f24cbeb0-620c-49d5-a5b9-da30106a74bb" />
+<img width="1235" height="764" alt="Bachman_s3" src="https://github.com/user-attachments/assets/1803f1e7-8004-4ddc-b7ce-3d82a995d7b8" />
+
 
 ---
 
